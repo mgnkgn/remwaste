@@ -8,6 +8,7 @@ import services from "../services";
 import SkipSkeleton from "./SkipSkeleton";
 import SelectButton from "./SelectButton";
 import SortAndFilter from "./SortAndFilter";
+import NextStep from "./NextStep";
 
 const SkipSelection = () => {
   const [selectedSkipId, setSelectedSkipId] = useState("");
@@ -37,6 +38,11 @@ const SkipSelection = () => {
   }, []);
 
   const handleSelectSkip = (id) => {
+    if (id === selectedSkipId) {
+      setSelectedSkipId("");
+      return;
+    }
+
     setSelectedSkipId(id);
   };
 
@@ -75,6 +81,8 @@ const SkipSelection = () => {
       return false;
     return true;
   });
+
+  const selectedSkip = skips.find((skip) => skip.id === selectedSkipId);
 
   return (
     <div className="min-h-screen bg-gray-800 text-white p-10">
@@ -136,6 +144,11 @@ const SkipSelection = () => {
               </p>
             )}
       </div>
+
+      <NextStep
+        selectedSkip={selectedSkip}
+        handleSelectSkip={handleSelectSkip}
+      />
     </div>
   );
 };
